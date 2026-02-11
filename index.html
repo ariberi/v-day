@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Mensaje Especial Para Vos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ========== SCREEN 1 - SCARY CODE RED ========== */
+        #screen1 {
+            background: #0a0000;
+            font-family: 'Courier New', monospace;
+        }
+
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(180, 0, 0, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 25px 25px;
+            pointer-events: none;
+        }
+
+        .fog {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(180, 0, 0, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(150, 0, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 30%, rgba(200, 0, 0, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 70%, rgba(160, 0, 0, 0.12) 0%, transparent 45%);
+            animation: fog 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fog {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .code-char {
+            position: absolute;
+            color: #cc0000;
+            font-size: 16px;
+            opacity: 0.2;
+            animation: fall-code linear infinite;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+        }
+
+        @keyframes fall-code {
+            0% { transform: translateY(-20px); opacity: 0.35; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .skull-rain {
+            position: absolute;
+            font-size: 22px;
+            opacity: 0.15;
+            animation: fall-skull linear infinite;
+            pointer-events: none;
+            filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(-30deg) saturate(5);
+        }
+
+        @keyframes fall-skull {
+            0% { transform: translateY(-40px) rotate(0deg); opacity: 0.2; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .glitch-text {
+            color: #cc0000;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(200, 0, 0, 0.9), 0 0 30px rgba(150, 0, 0, 0.6);
+            animation: glitch 3s infinite;
+            letter-spacing: 5px;
+            z-index: 10;
+            position: relative;
+        }
+
+        @keyframes glitch {
+            0%, 100% { opacity: 1; text-shadow: 0 0 15px rgba(200, 0, 0, 0.9); }
+            5% { opacity: 0.8; transform: translateX(-2px); }
+            10% { opacity: 1; transform: translateX(0); }
+            15% { opacity: 0.6; transform: translateX(2px); }
+            20% { opacity: 1; transform: translateX(0); }
+            50% { opacity: 1; }
+            55% { opacity: 0.7; text-shadow: 2px 0 #ff0000, -2px 0 #8b0000; }
+            60% { opacity: 1; text-shadow: 0 0 15px rgba(200, 0, 0, 0.9); }
+            85% { opacity: 0.5; }
+            90% { opacity: 1; }
+        }
+
+        .terminal-line {
+            color: #cc0000;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
+            z-index: 10;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 5px rgba(200, 0, 0, 0.5);
+        }
+
+        .suspense-dots {
+            color: #cc0000;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: dots-pulse 1.5s infinite;
+            z-index: 10;
+            text-shadow: 0 0 10px rgba(200, 0, 0, 0.6);
+        }
+
+        @keyframes dots-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .mystery-btn {
+            padding: 20px 55px;
+            font-size: 1.4rem;
+            background: transparent;
+            color: #cc0000;
+            border: 2px solid #cc0000;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            z-index: 10;
+            animation: btn-glow 2s ease-in-out infinite;
+            transition: all 0.5s ease, opacity 2s ease;
+            font-family: 'Courier New', monospace;
+            margin-top: 25px;
+            text-shadow: 0 0 10px rgba(200, 0, 0, 0.5);
+        }
+
+        @keyframes btn-glow {
+            0%, 100% { box-shadow: 0 0 25px rgba(200, 0, 0, 0.4), inset 0 0 25px rgba(200, 0, 0, 0.08); }
+            50% { box-shadow: 0 0 50px rgba(200, 0, 0, 0.7), inset 0 0 35px rgba(200, 0, 0, 0.15); }
+        }
+
+        .mystery-btn:hover {
+            background: rgba(200, 0, 0, 0.25);
+            transform: scale(1.08);
+            letter-spacing: 14px;
+        }
+
+        /* ========== SCREEN 2 - PURE ARCHITECT ========== */
+        #screen2 {
+            background: #0a1a2e;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .blueprint-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(100, 180, 255, 0.15) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(100, 180, 255, 0.15) 2px, transparent 2px),
+                linear-gradient(rgba(100, 180, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 180, 255, 0.08) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            pointer-events: none;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-item {
+            position: absolute;
+            color: rgba(100, 180, 255, 0.25);
+            animation: float-item 6s ease-in-out infinite;
+            font-size: 12px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        @keyframes float-item {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .blueprint-box {
+            background: rgba(10, 26, 46, 0.97);
+            border: 3px solid #4a9eff;
+            padding: 50px 70px 25px 70px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            box-shadow:
+                0 0 60px rgba(74, 158, 255, 0.15),
+                inset 0 0 100px rgba(74, 158, 255, 0.02);
+        }
+
+        .corner {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-color: #ff6b6b;
+            border-style: solid;
+        }
+        .corner.tl { top: -3px; left: -3px; border-width: 4px 0 0 4px; }
+        .corner.tr { top: -3px; right: -3px; border-width: 4px 4px 0 0; }
+        .corner.bl { bottom: -3px; left: -3px; border-width: 0 0 4px 4px; }
+        .corner.br { bottom: -3px; right: -3px; border-width: 0 4px 4px 0; }
+
+        .drawing-title {
+            text-align: center;
+            color: #4a9eff;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .kanji-title {
+            display: none;
+        }
+
+        .heart-drawing {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 20px;
+        }
+
+        .heart-drawing svg {
+            width: 140px;
+            height: 120px;
+            stroke: #ff6b6b;
+            fill: none;
+            stroke-width: 2.5;
+            filter: drop-shadow(0 0 15px rgba(255, 107, 107, 0.4));
+            animation: heart-pulse 2s ease-in-out infinite;
+        }
+
+        .heart-drawing .construction-lines {
+            stroke: #4a9eff;
+            stroke-width: 0.5;
+            stroke-dasharray: 5, 5;
+            opacity: 0.5;
+        }
+
+        @keyframes heart-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .dimension {
+            position: absolute;
+            font-size: 0.55rem;
+            color: #4a9eff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .dim-top { top: 5px; left: 50%; transform: translateX(-50%); }
+        .dim-left { left: 5px; top: 50%; transform: translateY(-50%); }
+        .dim-right { right: 5px; top: 50%; transform: translateY(-50%); }
+        .dim-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+
+        .section-label {
+            color: #4a9eff;
+            font-size: 0.7rem;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .valentine-msg {
+            color: #ffffff;
+            font-size: 1.6rem;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-family: 'Georgia', serif;
+        }
+
+        .specs-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            font-size: 0.6rem;
+            color: #4a9eff;
+            opacity: 0.6;
+        }
+
+        .spec-item {
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .spec-label {
+            font-size: 0.5rem;
+            opacity: 0.7;
+            margin-bottom: 3px;
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .yes-btn {
+            padding: 14px 50px;
+            font-size: 0.9rem;
+            background: transparent;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .yes-btn::before, .yes-btn::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: #ff6b6b;
+            border-style: solid;
+            transition: all 0.3s ease;
+        }
+        .yes-btn::before { top: -5px; left: -5px; border-width: 2px 0 0 2px; }
+        .yes-btn::after { bottom: -5px; right: -5px; border-width: 0 2px 2px 0; }
+
+        .yes-btn:hover {
+            transform: scale(1.25);
+            background: #ff6b6b;
+            color: #0a1a2e;
+            box-shadow: 0 0 40px rgba(255, 107, 107, 0.5);
+        }
+
+        .no-btn {
+            padding: 12px 35px;
+            font-size: 0.85rem;
+            background: #0a1a2e;
+            color: #4a9eff;
+            border: 1px solid #4a9eff;
+            opacity: 0.5;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            z-index: 9999;
+            transition: left 0.15s, top 0.15s;
+        }
+
+        .reject-taunt {
+            color: #ff6b6b;
+            font-size: 0.7rem;
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            pointer-events: none;
+            white-space: nowrap;
+            margin-top: 8px;
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.6), 0 0 20px rgba(255, 107, 107, 0.3);
+            animation: taunt-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes taunt-pulse {
+            0%, 100% { opacity: 0.6; text-shadow: 0 0 8px rgba(255, 107, 107, 0.6), 0 0 20px rgba(255, 107, 107, 0.3); }
+            50% { opacity: 1; text-shadow: 0 0 12px rgba(255, 107, 107, 0.9), 0 0 30px rgba(255, 107, 107, 0.5); }
+        }
+
+        /* ========== CONFIRM MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 12, 23, 0.85);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #0a1a2e;
+            border: 2px solid #ff6b6b;
+            padding: 40px 45px;
+            max-width: 440px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 0 60px rgba(255, 107, 107, 0.2), 0 0 120px rgba(255, 107, 107, 0.05);
+            animation: modal-appear 0.3s ease;
+        }
+
+        @keyframes modal-appear {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-corner {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: #4a9eff;
+            border-style: solid;
+        }
+        .modal-corner.tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+        .modal-corner.tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
+        .modal-corner.bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
+        .modal-corner.br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+
+        .modal-warning-icon {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            color: #ff6b6b;
+            font-family: 'Arial', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-msg {
+            color: #ffffff;
+            font-family: 'Georgia', serif;
+            font-size: 1.15rem;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .modal-warning {
+            color: #ff6b6b;
+            font-family: 'Arial', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            margin: 15px 0 25px 0;
+            opacity: 0.8;
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+            animation: taunt-pulse 1.5s ease-in-out infinite;
+        }
+
+        .modal-btns {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            min-height: 100px;
+        }
+
+        .modal-confirm-btn {
+            padding: 12px 40px;
+            font-size: 0.85rem;
+            background: transparent;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-confirm-btn:hover {
+            background: #ff6b6b;
+            color: #0a1a2e;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+            transform: scale(1.08);
+        }
+
+        .modal-cancel-btn {
+            padding: 10px 30px;
+            font-size: 0.8rem;
+            background: #0a1a2e;
+            color: #4a9eff;
+            border: 1px solid #4a9eff;
+            opacity: 0.6;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            z-index: 10001;
+            transition: left 0.15s, top 0.15s;
+        }
+
+        /* ========== SCREEN 3 - JAPANESE TEMPLE CELEBRATION ========== */
+        #screen3 {
+            background: #2a1000;
+            overflow: hidden;
+        }
+
+        .castle-sky {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(255, 130, 0, 0.5) 0%, transparent 55%),
+                radial-gradient(ellipse at 30% 15%, rgba(255, 170, 0, 0.18) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 25%, rgba(255, 190, 0, 0.14) 0%, transparent 35%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 140, 0, 0.06) 0%, transparent 60%),
+                linear-gradient(180deg, #1a0a04 0%, #2a1000 25%, #3d1a00 55%, #5a2d00 100%);
+            pointer-events: none;
+        }
+
+        .castle-stars {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+
+        .castle-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ff9933;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.7; }
+        }
+
+        .castle-scene {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            pointer-events: none;
+        }
+
+        .castle-scene svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .castle-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 12%;
+        }
+
+        .castle-seal {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 30px auto;
+            border: 1px solid #c83232;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: seal-glow 3s ease-in-out infinite;
+            background: rgba(200, 50, 50, 0.08);
+        }
+
+        .castle-seal svg {
+            width: 65px;
+            height: 58px;
+            stroke: #c83232;
+            fill: none;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 10px rgba(200, 50, 50, 0.4));
+        }
+
+        @keyframes seal-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(200, 50, 50, 0.15); }
+            50% { box-shadow: 0 0 40px rgba(200, 50, 50, 0.3), 0 0 80px rgba(255, 102, 0, 0.1); }
+        }
+
+        .castle-decree {
+            font-family: 'Georgia', serif;
+            color: #ff9933;
+            font-size: 1rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+
+        .castle-main-text {
+            font-family: 'Georgia', serif;
+            color: #f0e6dc;
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 30px rgba(255, 140, 0, 0.3);
+            line-height: 1.3;
+        }
+
+        .castle-kanji {
+            font-size: 2.4rem;
+            color: rgba(200, 50, 50, 0.3);
+            letter-spacing: 25px;
+            margin-bottom: 5px;
+        }
+
+        .castle-sub-text {
+            font-family: 'Georgia', serif;
+            color: #ff9933;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+
+        .castle-divider {
+            width: 170px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c83232, transparent);
+            margin: 18px auto;
+        }
+
+        .castle-stamp {
+            font-family: 'Georgia', serif;
+            color: rgba(255, 160, 100, 0.75);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-top: 8px;
+        }
+
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+            animation: heart-float linear forwards;
+        }
+
+        .floating-heart svg {
+            stroke: #c83232;
+            fill: none;
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 6px rgba(200, 50, 50, 0.3));
+        }
+
+        @keyframes heart-float {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        .ember {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 4;
+            animation: ember-rise linear forwards;
+        }
+
+        @keyframes ember-rise {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) translateX(var(--drift)); opacity: 0; }
+        }
+
+        .sakura-petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3;
+            color: rgba(200, 80, 80, 0.4);
+            animation: petal-fall linear forwards;
+        }
+
+        @keyframes petal-fall {
+            0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            100% { transform: translateY(100vh) translateX(var(--drift)) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: SCARY CODE RED -->
+    <div id="screen1" class="screen">
+        <div class="matrix-bg"></div>
+        <div class="fog"></div>
+        <div class="code-rain" id="codeRain"></div>
+        <p class="terminal-line" id="line1"></p>
+        <p class="suspense-dots" id="dots"></p>
+        <p class="glitch-text" id="mainText"></p>
+        <p class="terminal-line" id="line2"></p>
+        <button class="mystery-btn" id="enterBtn" onclick="goToScreen2()" style="opacity: 0; pointer-events: none;">INGRESAR</button>
+    </div>
+
+    <!-- SCREEN 2: PURE ARCHITECT -->
+    <div id="screen2" class="screen hidden">
+        <div class="blueprint-grid"></div>
+        <div class="floating-elements" id="floatingElements"></div>
+        <div class="blueprint-box">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+
+            <p class="drawing-title">Propuesta Arquitectónica - Plano 01</p>
+
+            <div class="heart-drawing">
+                <span class="dimension dim-top">R = INFINITO</span>
+                <span class="dimension dim-left">SECCIÓN A</span>
+                <span class="dimension dim-right">SECCIÓN A'</span>
+                <span class="dimension dim-bottom">ESCALA 1:1</span>
+                <svg viewBox="0 0 100 90">
+                    <!-- Construction lines -->
+                    <line class="construction-lines" x1="50" y1="0" x2="50" y2="90"/>
+                    <line class="construction-lines" x1="0" y1="20" x2="100" y2="20"/>
+                    <circle class="construction-lines" cx="25" cy="20" r="20"/>
+                    <circle class="construction-lines" cx="75" cy="20" r="20"/>
+                    <!-- Heart shape -->
+                    <path d="M50 85 C20 55, 0 35, 0 20 C0 5, 15 0, 25 0 C35 0, 45 10, 50 20 C55 10, 65 0, 75 0 C85 0, 100 5, 100 20 C100 35, 80 55, 50 85Z" />
+                </svg>
+            </div>
+
+            <p class="section-label">Descripción del Proyecto</p>
+            <p class="valentine-msg">¿Querés ser mi Valentine?</p>
+
+            <div class="specs-row">
+                <div class="spec-item">
+                    <div class="spec-label">MATERIAL</div>
+                    <div>Amor Puro</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">ESTRUCTURA</div>
+                    <div>Eterna</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">ESTADO</div>
+                    <div>Pendiente</div>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="yes-btn" onclick="showConfirmModal()">APROBAR</button>
+            </div>
+
+            <div id="rejectZone" style="min-height: 70px; display: flex; flex-direction: column; align-items: center; margin-top: 15px;">
+                <button class="no-btn" id="noBtn" onmouseover="runAway()" onclick="runAway()">RECHAZAR</button>
+                <span class="reject-taunt" id="rejectTaunt">psst... ni se te ocurra rechazar</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM MODAL -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-box">
+            <div class="modal-corner tl"></div>
+            <div class="modal-corner tr"></div>
+            <div class="modal-corner bl"></div>
+            <div class="modal-corner br"></div>
+
+            <div class="modal-warning-icon">⚠️</div>
+            <p class="modal-title">Confirmación de Aprobación Requerida</p>
+            <p class="modal-msg">¿Estás segura de que querés aprobar este proyecto?</p>
+            <p class="modal-warning">Advertencia: una vez aprobado, no hay vuelta atrás</p>
+
+            <div class="modal-btns">
+                <button class="modal-confirm-btn" onclick="confirmApprove()">Sí, Aprobar</button>
+                <button class="modal-cancel-btn" id="modalCancelBtn" onmouseover="modalRunAway()" onclick="modalRunAway()">No, volver atrás</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: JAPANESE TEMPLE CELEBRATION -->
+    <div id="screen3" class="screen hidden">
+        <div class="castle-sky"></div>
+        <div class="castle-stars" id="castleStars"></div>
+
+        <div class="castle-content">
+            <div class="castle-seal">
+                <svg viewBox="0 0 100 90">
+                    <path d="M50 85 C20 55, 0 35, 0 20 C0 5, 15 0, 25 0 C35 0, 45 10, 50 20 C55 10, 65 0, 75 0 C85 0, 100 5, 100 20 C100 35, 80 55, 50 85Z" />
+                </svg>
+            </div>
+            <p class="castle-decree">永遠の絆</p>
+            <div class="castle-divider"></div>
+            <p class="castle-kanji">承認済</p>
+            <h1 class="castle-main-text">Sellado Con Amor</h1>
+            <p class="castle-sub-text">Te amo, mi amorcito.</p>
+            <div class="castle-divider"></div>
+            <p class="castle-stamp">12 de Febrero &mdash; Ari y Cande &mdash; Parrilla Maravilla<br>Sin devoluciones ni reembolsos</p>
+        </div>
+
+        <!-- Japanese Temple Silhouette -->
+        <div class="castle-scene">
+            <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice">
+                <!-- Ground -->
+                <rect x="0" y="360" width="1200" height="40" fill="#2a1200"/>
+                <!-- Rolling hills -->
+                <path d="M0 380 Q150 320 300 360 Q450 310 600 340 Q750 300 900 350 Q1050 310 1200 360 L1200 400 L0 400Z" fill="#3d1a00"/>
+
+                <!-- Left Torii Gate -->
+                <g opacity="0.5">
+                    <rect x="100" y="220" width="8" height="140" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <rect x="192" y="220" width="8" height="140" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <rect x="88" y="218" width="124" height="8" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <path d="M85 210 Q150 195 215 210" fill="none" stroke="#c83232" stroke-width="2.5"/>
+                    <rect x="118" y="235" width="64" height="5" fill="#4d1e1e" stroke="#c83232" stroke-width="0.5"/>
+                </g>
+
+                <!-- Central Temple (Pagoda) -->
+                <g opacity="0.75">
+                    <!-- Base -->
+                    <rect x="460" y="280" width="160" height="80" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <!-- First floor roof -->
+                    <path d="M430 280 Q540 260 650 280" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                    <line x1="430" y1="280" x2="425" y2="282" stroke="#c83232" stroke-width="1"/>
+                    <line x1="650" y1="280" x2="655" y2="282" stroke="#c83232" stroke-width="1"/>
+                    <!-- Second floor -->
+                    <rect x="480" y="230" width="120" height="50" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <!-- Second roof -->
+                    <path d="M455 230 Q540 212 625 230" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                    <line x1="455" y1="230" x2="450" y2="232" stroke="#c83232" stroke-width="1"/>
+                    <line x1="625" y1="230" x2="630" y2="232" stroke="#c83232" stroke-width="1"/>
+                    <!-- Third floor -->
+                    <rect x="500" y="190" width="80" height="40" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <!-- Third roof -->
+                    <path d="M478 190 Q540 174 602 190" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                    <line x1="478" y1="190" x2="473" y2="192" stroke="#c83232" stroke-width="1"/>
+                    <line x1="602" y1="190" x2="607" y2="192" stroke="#c83232" stroke-width="1"/>
+                    <!-- Top spire -->
+                    <rect x="530" y="155" width="20" height="35" fill="#4d1e1e" stroke="#c83232" stroke-width="0.5"/>
+                    <path d="M515 155 Q540 142 565 155" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <line x1="540" y1="120" x2="540" y2="142" stroke="#c83232" stroke-width="1.5"/>
+                    <!-- Finial -->
+                    <circle cx="540" cy="118" r="4" fill="none" stroke="#c83232" stroke-width="1"/>
+                    <!-- Windows/doors -->
+                    <rect x="520" y="310" width="40" height="50" rx="20" fill="#1f0e0e" stroke="#c83232" stroke-width="0.5" opacity="0.5"/>
+                    <rect x="500" y="245" width="14" height="20" rx="7" fill="#1f0e0e" stroke="#c83232" stroke-width="0.3" opacity="0.4"/>
+                    <rect x="566" y="245" width="14" height="20" rx="7" fill="#1f0e0e" stroke="#c83232" stroke-width="0.3" opacity="0.4"/>
+                    <!-- Lantern glow from gate -->
+                    <ellipse cx="540" cy="335" rx="15" ry="20" fill="rgba(255, 120, 0, 0.06)"/>
+                </g>
+
+                <!-- Right small shrine -->
+                <g opacity="0.45">
+                    <rect x="880" y="290" width="80" height="70" fill="#4d1e1e" stroke="#c83232" stroke-width="0.5"/>
+                    <path d="M865 290 Q920 275 975 290" fill="#4d1e1e" stroke="#c83232" stroke-width="0.8"/>
+                    <line x1="865" y1="290" x2="862" y2="292" stroke="#c83232" stroke-width="0.8"/>
+                    <line x1="975" y1="290" x2="978" y2="292" stroke="#c83232" stroke-width="0.8"/>
+                    <rect x="905" y="315" width="30" height="45" rx="15" fill="#1f0e0e" stroke="#c83232" stroke-width="0.3" opacity="0.4"/>
+                </g>
+
+                <!-- Lanterns hanging -->
+                <g opacity="0.5">
+                    <rect x="350" y="300" width="10" height="14" rx="3" fill="#c83232" opacity="0.5"/>
+                    <line x1="355" y1="295" x2="355" y2="300" stroke="#c83232" stroke-width="0.5"/>
+                    <ellipse cx="355" cy="307" rx="6" ry="3" fill="rgba(255, 120, 0, 0.15)"/>
+
+                    <rect x="720" y="295" width="10" height="14" rx="3" fill="#c83232" opacity="0.5"/>
+                    <line x1="725" y1="290" x2="725" y2="295" stroke="#c83232" stroke-width="0.5"/>
+                    <ellipse cx="725" cy="302" rx="6" ry="3" fill="rgba(255, 120, 0, 0.15)"/>
+                </g>
+
+                <!-- Two penguins on the right hill -->
+                <g transform="translate(1020, 295)" opacity="0.75">
+                    <!-- Left penguin -->
+                    <g transform="rotate(8) scale(0.8)">
+                        <ellipse cx="0" cy="25" rx="12" ry="20" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                        <ellipse cx="0" cy="28" rx="7" ry="13" fill="#1f0e0e" stroke="#c83232" stroke-width="0.5" opacity="0.5"/>
+                        <circle cx="0" cy="3" r="10" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                        <circle cx="4" cy="1" r="1.5" fill="#ff8c00" opacity="0.8"/>
+                        <polygon points="8,3 14,5 8,6" fill="#ff6600" opacity="0.7"/>
+                        <path d="M10,18 Q20,14 16,28" fill="none" stroke="#c83232" stroke-width="1.2" stroke-linecap="round"/>
+                        <ellipse cx="-4" cy="46" rx="5" ry="2.5" fill="#ff6600" opacity="0.4"/>
+                        <ellipse cx="4" cy="46" rx="5" ry="2.5" fill="#ff6600" opacity="0.4"/>
+                    </g>
+                    <!-- Right penguin -->
+                    <g transform="translate(24, 0) scale(-0.8, 0.8) rotate(8)">
+                        <ellipse cx="0" cy="25" rx="12" ry="20" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                        <ellipse cx="0" cy="28" rx="7" ry="13" fill="#1f0e0e" stroke="#c83232" stroke-width="0.5" opacity="0.5"/>
+                        <circle cx="0" cy="3" r="10" fill="#4d1e1e" stroke="#c83232" stroke-width="1"/>
+                        <circle cx="4" cy="1" r="1.5" fill="#ff8c00" opacity="0.8"/>
+                        <polygon points="8,3 14,5 8,6" fill="#ff6600" opacity="0.7"/>
+                        <path d="M10,18 Q20,14 16,28" fill="none" stroke="#c83232" stroke-width="1.2" stroke-linecap="round"/>
+                        <ellipse cx="-4" cy="46" rx="5" ry="2.5" fill="#ff6600" opacity="0.4"/>
+                        <ellipse cx="4" cy="46" rx="5" ry="2.5" fill="#ff6600" opacity="0.4"/>
+                    </g>
+                    <!-- Heart above -->
+                    <g transform="translate(12, -16) scale(0.1)">
+                        <path d="M50 85 C20 55, 0 35, 0 20 C0 5, 15 0, 25 0 C35 0, 45 10, 50 20 C55 10, 65 0, 75 0 C85 0, 100 5, 100 20 C100 35, 80 55, 50 85Z" fill="none" stroke="#c83232" stroke-width="8" opacity="0.6"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        // Create code rain and skulls for screen 1
+        function createCodeRain() {
+            const container = document.getElementById('codeRain');
+            const chars = ['0', '1', '0', '1', '0', '1', '{', '}', '<', '>', '/', '*', '#', '@', '!', '?', '0', '1', '0', '1'];
+            for (let i = 0; i < 80; i++) {
+                const char = document.createElement('span');
+                char.className = 'code-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (4 + Math.random() * 8) + 's';
+                char.style.animationDelay = Math.random() * 5 + 's';
+                char.style.opacity = 0.1 + Math.random() * 0.2;
+                container.appendChild(char);
+            }
+            // Falling skulls
+            const skulls = ['💀', '☠️'];
+            for (let i = 0; i < 15; i++) {
+                const skull = document.createElement('span');
+                skull.className = 'skull-rain';
+                skull.textContent = skulls[Math.floor(Math.random() * skulls.length)];
+                skull.style.left = Math.random() * 100 + '%';
+                skull.style.animationDuration = (6 + Math.random() * 10) + 's';
+                skull.style.animationDelay = Math.random() * 8 + 's';
+                skull.style.fontSize = (16 + Math.random() * 16) + 'px';
+                container.appendChild(skull);
+            }
+        }
+
+        // Typing effect function
+        function typeText(element, text, speed, callback) {
+            let i = 0;
+            element.textContent = '';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        // Start the suspense sequence
+        function startSuspenseSequence() {
+            const line1 = document.getElementById('line1');
+            const dots = document.getElementById('dots');
+            const mainText = document.getElementById('mainText');
+            const line2 = document.getElementById('line2');
+            const enterBtn = document.getElementById('enterBtn');
+
+            // Step 1: Type first line
+            setTimeout(() => {
+                typeText(line1, '> inicializando mensaje_secreto.exe_', 50, () => {
+                    // Step 2: Show dots with pause
+                    setTimeout(() => {
+                        typeText(dots, '💀 ☠️ 💀 ☠️ 💀 ☠️', 300, () => {
+                            // Step 3: Type main message
+                            setTimeout(() => {
+                                typeText(mainText, 'Hay algo importante que debes saber...', 80, () => {
+                                    // Step 4: Type second line
+                                    setTimeout(() => {
+                                        typeText(line2, '> presiona el botón para si te interesa_', 50, () => {
+                                            // Step 5: Show button slowly
+                                            setTimeout(() => {
+                                                enterBtn.style.transition = 'opacity 2.5s ease';
+                                                enterBtn.style.opacity = '1';
+                                                enterBtn.style.pointerEvents = 'auto';
+                                            }, 600);
+                                        });
+                                    }, 600);
+                                });
+                            }, 800);
+                        });
+                    }, 500);
+                });
+            }, 800);
+        }
+
+        // Start code rain on load
+        createCodeRain();
+
+        // Start typing sequence on load
+        startSuspenseSequence();
+
+        function goToScreen2() {
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+            createFloatingElements();
+            positionNoButton();
+        }
+
+        function showConfirmModal() {
+            const modal = document.getElementById('confirmModal');
+            const cancelBtn = document.getElementById('modalCancelBtn');
+            modal.classList.add('active');
+            // Reset cancel button to normal flow position
+            cancelBtn.style.position = '';
+            cancelBtn.style.left = '';
+            cancelBtn.style.top = '';
+        }
+
+        function confirmApprove() {
+            document.getElementById('confirmModal').classList.remove('active');
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen3').classList.remove('hidden');
+            startParty();
+        }
+
+        function modalRunAway() {
+            const btn = document.getElementById('modalCancelBtn');
+            if (btn.style.position !== 'fixed') {
+                btn.style.position = 'fixed';
+            }
+            const maxX = window.innerWidth - btn.offsetWidth - 10;
+            const maxY = window.innerHeight - btn.offsetHeight - 10;
+            btn.style.left = Math.floor(Math.random() * maxX) + 'px';
+            btn.style.top = Math.floor(Math.random() * maxY) + 'px';
+        }
+
+        function goToScreen3() {
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen3').classList.remove('hidden');
+            startParty();
+        }
+
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const symbols = ['△', '○', '□', '⬡', '◇', '∠', '⊿', '▽', '♡', '⌂'];
+            for (let i = 0; i < 20; i++) {
+                const item = document.createElement('span');
+                item.className = 'floating-item';
+                item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                item.style.left = Math.random() * 100 + '%';
+                item.style.top = Math.random() * 100 + '%';
+                item.style.fontSize = (10 + Math.random() * 14) + 'px';
+                item.style.animationDelay = Math.random() * 5 + 's';
+                item.style.animationDuration = (5 + Math.random() * 4) + 's';
+                if (item.textContent === '♡') {
+                    item.style.color = 'rgba(255, 107, 107, 0.3)';
+                }
+                container.appendChild(item);
+            }
+        }
+
+        function positionNoButton() {
+            // Button starts naturally inside the blueprint-box
+        }
+
+        function runAway() {
+            const btn = document.getElementById('noBtn');
+            const taunt = document.getElementById('rejectTaunt');
+            // First escape: switch to fixed and hide taunt
+            if (btn.style.position !== 'fixed') {
+                btn.style.position = 'fixed';
+                taunt.style.display = 'none';
+            }
+            const maxX = window.innerWidth - btn.offsetWidth - 10;
+            const maxY = window.innerHeight - btn.offsetHeight - 10;
+            btn.style.left = Math.floor(Math.random() * maxX) + 'px';
+            btn.style.top = Math.floor(Math.random() * maxY) + 'px';
+        }
+
+        function startParty() {
+            // Create stars
+            const starsContainer = document.getElementById('castleStars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'castle-star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 50 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (2 + Math.random() * 3) + 's';
+                if (Math.random() > 0.7) {
+                    star.style.width = '3px';
+                    star.style.height = '3px';
+                    star.style.boxShadow = '0 0 4px rgba(255, 153, 51, 0.3)';
+                }
+                starsContainer.appendChild(star);
+            }
+
+            // Floating heart outlines rising from bottom
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                const size = 12 + Math.random() * 18;
+                heart.innerHTML = `<svg viewBox="0 0 100 90" width="${size}" height="${size}"><path d="M50 85 C20 55, 0 35, 0 20 C0 5, 15 0, 25 0 C35 0, 45 10, 50 20 C55 10, 65 0, 75 0 C85 0, 100 5, 100 20 C100 35, 80 55, 50 85Z"/></svg>`;
+                heart.style.left = 20 + Math.random() * 60 + '%';
+                heart.style.bottom = '0px';
+                heart.style.animationDuration = (7 + Math.random() * 6) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 13000);
+            }, 1000);
+
+            // Embers rising from temple
+            setInterval(() => {
+                const ember = document.createElement('div');
+                ember.className = 'ember';
+                ember.style.left = 30 + Math.random() * 40 + '%';
+                ember.style.bottom = '35%';
+                ember.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+                ember.style.animationDuration = (4 + Math.random() * 4) + 's';
+                ember.style.background = Math.random() > 0.5
+                    ? 'rgba(200, 50, 50, 0.6)'
+                    : 'rgba(255, 120, 0, 0.5)';
+                document.body.appendChild(ember);
+                setTimeout(() => ember.remove(), 8000);
+            }, 180);
+
+            // Sakura petals falling
+            const petals = ['桜', '✿', '❀', '✾'];
+            setInterval(() => {
+                const petal = document.createElement('span');
+                petal.className = 'sakura-petal';
+                petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.top = '-20px';
+                petal.style.fontSize = (10 + Math.random() * 12) + 'px';
+                petal.style.setProperty('--drift', (Math.random() * 100 - 50) + 'px');
+                petal.style.animationDuration = (8 + Math.random() * 6) + 's';
+                document.body.appendChild(petal);
+                setTimeout(() => petal.remove(), 14000);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
